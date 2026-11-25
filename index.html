@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Darmowy mini-audyt automatyzacji – Smith Doradztwo (demo)</title>
+<style>
+  *{box-sizing:border-box}
+  body{font-family:Arial,Helvetica,sans-serif;background:#f4f6f8;color:#222;margin:0;padding:24px 16px}
+  .box{max-width:620px;margin:0 auto;background:#fff;border-radius:10px;padding:28px;box-shadow:0 2px 10px rgba(0,0,0,.08)}
+  .demo{background:#fff8e1;border:1px solid #ffe082;border-radius:8px;padding:10px 14px;font-size:13px;margin-bottom:20px}
+  h1{font-size:22px;margin:0 0 8px}
+  p.lead{margin:0 0 20px;color:#555}
+  label{display:block;font-weight:bold;margin:16px 0 6px;font-size:14px}
+  input[type=email],input[type=number],select,input[type=text]{width:100%;padding:10px;border:1px solid #bbb;border-radius:6px;font-size:15px}
+  .checks label{display:flex;gap:8px;align-items:center;font-weight:normal;margin:6px 0}
+  .consent{margin-top:20px;font-size:13px;color:#444}
+  .consent label{display:flex;gap:8px;align-items:flex-start;font-weight:normal;font-size:13px}
+  .rodo{font-size:12px;color:#666;background:#fafafa;border:1px solid #e5e5e5;border-radius:6px;padding:10px;margin-top:10px;line-height:1.5}
+  button{margin-top:22px;width:100%;padding:13px;background:#2e7d32;color:#fff;border:0;border-radius:8px;font-size:16px;cursor:pointer}
+  button:disabled{background:#9e9e9e;cursor:default}
+  .hp{position:absolute;left:-9999px;top:-9999px;height:0;width:0;overflow:hidden}
+  #msg{display:none;text-align:center;padding:30px 10px}
+  .err{color:#c62828;font-size:13px;margin-top:10px;display:none}
+</style>
+</head>
+<body>
+<div class="box">
+  <div class="demo"><b>Projekt demonstracyjny.</b> Smith Doradztwo to fikcyjna firma. Formularz pokazuje, jak działa automatyzacja w Make i OpenAI. Wynik to inspiracja wygenerowana przez AI, a nie oferta handlowa.</div>
+
+  <div id="formWrap">
+    <h1>Darmowy mini-audyt automatyzacji</h1>
+    <p class="lead">Powiedz, co zabiera Ci najwięcej czasu. W kilka minut dostaniesz na e-mail 3 pomysły, co można zautomatyzować.</p>
+
+    <form id="f" novalidate>
+      <label for="email">Twój e-mail</label>
+      <input type="email" id="email" name="email" required autocomplete="email">
+
+      <label for="branza">Branża</label>
+      <input type="text" id="branza" name="branza" required maxlength="80" placeholder="np. salon fryzjerski, ekipa remontowa, sklep internetowy">
+
+      <label for="wielkosc">Wielkość firmy</label>
+      <select id="wielkosc" name="wielkosc" required>
+        <option value="">Wybierz…</option>
+        <option>1 osoba</option>
+        <option>2-5 osob</option>
+        <option>6-20 osob</option>
+        <option>20+ osob</option>
+      </select>
+
+      <label>Co zabiera najwięcej czasu? (zaznacz, co pasuje)</label>
+      <div class="checks" id="zadania">
+        <label><input type="checkbox" value="zapytania od klientow"> Zapytania od klientów</label>
+        <label><input type="checkbox" value="umawianie terminow"> Umawianie terminów</label>
+        <label><input type="checkbox" value="wyceny i oferty"> Wyceny i oferty</label>
+        <label><input type="checkbox" value="faktury i dokumenty"> Faktury i dokumenty</label>
+        <label><input type="checkbox" value="arkusze i raporty"> Arkusze i raporty</label>
+        <label><input type="checkbox" value="przypomnienia dla klientow"> Przypomnienia dla klientów</label>
+        <label><input type="checkbox" value="obsluga zamowien i zwrotow"> Obsługa zamówień i zwrotów</label>
+      </div>
+
+      <label for="godziny">Ile godzin tygodniowo na takie rzeczy?</label>
+      <input type="number" id="godziny" name="godziny" min="1" max="80" required>
+
+      <!-- honeypot: ukryte pole pułapka, prawdziwy człowiek go nie widzi -->
+      <div class="hp" aria-hidden="true">
+        <label for="website">Nie wypełniaj tego pola</label>
+        <input type="text" id="website" name="website" tabindex="-1" autocomplete="off">
+      </div>
+
+      <div class="consent">
+        <label>
+          <input type="checkbox" id="zgoda" required>
+          <span>Wyrażam zgodę na przetwarzanie moich danych w celu przygotowania i wysłania mini-audytu na podany adres e-mail oraz zapisania mojej opinii o wyniku.</span>
+        </label>
+        <div class="rodo">
+          <b>Informacja o przetwarzaniu danych (RODO).</b>
+          Administratorem danych jest [PRZEMYSŁAW TKACZYK], kontakt: [przemektk@gmail.com].
+          Dane (adres e-mail oraz informacje wpisane w formularzu) przetwarzamy na podstawie Twojej zgody (art. 6 ust. 1 lit. a RODO) wyłącznie w celu przygotowania i wysłania mini-audytu oraz zapisania opinii.
+          Opis branży, wielkości firmy i zadań trafia do usługi OpenAI, która generuje propozycje. Adres e-mail nie jest tam przekazywany. Dane przetwarzają też Make i Google (arkusz, poczta) jako dostawcy narzędzi.
+          Dane przechowujemy do 30 dni od zakończenia projektu demonstracyjnego, po czym je usuwamy.
+          Masz prawo dostępu do danych, ich sprostowania, usunięcia, ograniczenia przetwarzania, cofnięcia zgody w dowolnym momencie (bez wpływu na wcześniejsze przetwarzanie) oraz wniesienia skargi do Prezesa UODO.
+          Nie wpisuj w formularzu danych osobowych klientów ani innych danych wrażliwych.
+        </div>
+      </div>
+
+      <div class="err" id="err"></div>
+      <button type="submit" id="btn">Wyślij i odbierz mini-audyt</button>
+    </form>
+  </div>
+
+  <div id="msg">
+    <h2>Dziękujemy!</h2>
+    <p>Jeśli adres jest poprawny, mini-audyt dotrze na Twój e-mail w ciągu kilku minut. Sprawdź też folder Spam.</p>
+  </div>
+</div>
+
+<script>
+// WKLEJ TUTAJ adres webhooka GŁÓWNEGO scenariusza (formularz → OpenAI → arkusz → Gmail)
+const WEBHOOK_URL = "https://hook.eu1.make.com/3q43j5m789giaig4y84qs22sre2cpqs0";
+
+const f = document.getElementById("f");
+const btn = document.getElementById("btn");
+const err = document.getElementById("err");
+
+function showError(t){ err.textContent = t; err.style.display = "block"; }
+
+f.addEventListener("submit", function(e){
+  e.preventDefault();
+  err.style.display = "none";
+
+  const email = f.email.value.trim();
+  const branza = f.branza.value.trim();
+  const wielkosc = f.wielkosc.value;
+  const godziny = f.godziny.value;
+  const zadaniaArr = Array.from(document.querySelectorAll("#zadania input:checked")).map(i => i.value);
+
+  if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) return showError("Podaj poprawny adres e-mail.");
+  if(!branza) return showError("Wpisz branżę.");
+  if(!wielkosc) return showError("Wybierz wielkość firmy.");
+  if(zadaniaArr.length === 0) return showError("Zaznacz co najmniej jedno zadanie.");
+  if(!godziny || godziny < 1 || godziny > 80) return showError("Podaj liczbę godzin od 1 do 80.");
+  if(!document.getElementById("zgoda").checked) return showError("Zgoda jest wymagana, żeby wysłać mini-audyt.");
+
+  // dane w tym samym formacie pól, co w testach scenariusza
+  const body = new URLSearchParams({
+    email: email,
+    branza: branza,
+    wielkosc: wielkosc,
+    zadania: zadaniaArr.join(", "),
+    godziny: String(godziny),
+    zgoda: "tak",
+    website: f.website.value
+  });
+
+  btn.disabled = true;
+  btn.textContent = "Wysyłanie…";
+
+  // no-cors: przeglądarka wyśle dane, ale nie odczyta odpowiedzi
+  fetch(WEBHOOK_URL, { method: "POST", mode: "no-cors", body: body })
+    .then(function(){
+      document.getElementById("formWrap").style.display = "none";
+      document.getElementById("msg").style.display = "block";
+    })
+    .catch(function(){
+      btn.disabled = false;
+      btn.textContent = "Wyślij i odbierz mini-audyt";
+      showError("Nie udało się wysłać. Spróbuj ponownie za chwilę.");
+    });
+});
+</script>
+</body>
+</html>
